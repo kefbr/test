@@ -1,6 +1,7 @@
 package br.com.qintess.spring.modelo.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.commons.io.output.FileWriterWithEncoding;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class ColaboradorController {
 	@RequestMapping("/relatorio")
 	public String relatorio() {
 		try {
-			var csvWriter = new FileWriterWithEncoding("src/main/webapp/public/FileWriterTest.csv","UTF-8");			
+			FileWriterWithEncoding csvWriter = new FileWriterWithEncoding("src/main/webapp/public/FileWriterTest.csv","UTF-8");			
 			csvWriter.append("Tecnologia principal ou Atividades que executa");
 			csvWriter.append(";");
 			csvWriter.append("Conhecimento em outra tecnologia");
@@ -64,7 +65,7 @@ public class ColaboradorController {
 			csvWriter.append(";");
 			csvWriter.append("Temas que interessa ensinar");
 			csvWriter.append("\n");
-			var lista = daoColaborador.findAll();
+			Iterable<Colaborador> lista = daoColaborador.findAll();
 			for (Colaborador colaborador2 : lista) {
 				csvWriter.append(colaborador2.getTecatv());
 				csvWriter.append(";");
@@ -72,7 +73,7 @@ public class ColaboradorController {
 				csvWriter.append(";");
 				csvWriter.append(colaborador2.getFormacao());
 				csvWriter.append(";");
-				var aux = colaborador2.getCertificacao();
+				List<String> aux = colaborador2.getCertificacao();
 				for (String certificacao : aux) {
 					csvWriter.append(certificacao + ",");
 				}
